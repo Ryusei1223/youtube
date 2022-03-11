@@ -9,17 +9,35 @@
         <link rel="stylesheet" href="/css/app.css">
     </head>
     <body>
-        <h1 class="title">
-            {{ $post->title }}
-        </h1>
-        <div class="content">
-            <div class="content__post">
-                <h3>本文</h3>
-                <p>{{ $post->body }}</p>    
+        <h1>Blog Name</h1>
+        <p class="edit"><a href ="/posts/{{$post->id}}/edit">編集</a></p>
+        <form action="/posts/{{ $post->id }}" id="form_delete" method="post" style="display:inline">
+            {{csrf_field()}}
+            {{method_field("delete")}}
+            <input type="submit" style="display:none">
+            <p class="delete"><span onclick="return deletePost(this);">delete</span></p>
+        </form>
+        <div class ="post">
+            <h1 class="title">
+                {{ $post->title }}
+            </h1>
+            <div class="content">
+                <div class="content__post">
+                    <h3>本文</h3>
+                    <p>{{ $post->body }}</p>    
+                </div>
             </div>
         </div>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
+        <script>
+        function deletePost(){
+            "use strict";
+            if (confirm("削除すると復元できません。\n本当に削除しますか")){
+                document.getElementById("form_delete").submit();
+            }
+        }
+        </script>
     </body>
 </html>
